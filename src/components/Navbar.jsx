@@ -49,69 +49,6 @@ const getRandomColor = () => {
     return color;
 };
 
-const generateRandomUsername = () => {
-    const adjectives = [
-        "Adorable",
-        "Beautiful",
-        "Clever",
-        "Delightful",
-        "Energetic",
-        "Fancy",
-        "Gentle",
-        "Happy",
-        "Incredible",
-        "Jolly",
-        "Kind",
-        "Lively",
-        "Magnificent",
-        "Nice",
-        "Optimistic",
-        "Proud",
-        "Quiet",
-        "Real",
-        "Strong",
-        "Talented",
-        "Unique",
-        "Valiant",
-        "Wise",
-        "Xenial",
-        "Young",
-        "Zealous",
-    ];
-    const nouns = [
-        "Antelope",
-        "Bear",
-        "Cat",
-        "Dog",
-        "Elephant",
-        "Fox",
-        "Goat",
-        "Horse",
-        "Iguana",
-        "Jaguar",
-        "Kangaroo",
-        "Lion",
-        "Monkey",
-        "Nightingale",
-        "Owl",
-        "Penguin",
-        "Quail",
-        "Rabbit",
-        "Squirrel",
-        "Tiger",
-        "Unicorn",
-        "Vulture",
-        "Wolf",
-        "Xerus",
-        "Yak",
-        "Zebra",
-    ];
-    const randomAdjective =
-        adjectives[Math.floor(Math.random() * adjectives.length)];
-    const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
-    return `${randomAdjective} ${randomNoun}`;
-};
-
 export default function Navbar({ isSignedIn }) {
     const [isActive, setIsActive] = useState(false);
     const [username, setUsername] = useState("");
@@ -125,9 +62,14 @@ export default function Navbar({ isSignedIn }) {
         setIsActive(!isActive);
     };
     return (
-        <nav className="navbar" role="navigation" aria-label="main navigation">
+        <nav
+            className="navbar"
+            role="navigation"
+            aria-label="main navigation"
+            style={{ position: "sticky", top: 0, zIndex: 1000 }}
+        >
             <div className="navbar-brand">
-                <a className="navbar-item" href="https://github.com/siddxharth">
+                <a className="navbar-item" href="/">
                     <svg
                         width="640"
                         height="160"
@@ -170,11 +112,32 @@ export default function Navbar({ isSignedIn }) {
             >
                 {isSignedIn ? (
                     <div className="navbar-end">
+                        {isSignedIn && (
+                            <>
+                                <div className="navbar-brand">
+                                    <div className="navbar-item">
+                                        <a
+                                            className="button is-primary"
+                                            href="/new-quiz"
+                                        >
+                                            Create new quiz
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="navbar-brand">
+                                    <div className="navbar-item">
+                                        <a
+                                            className="button is-link is-light"
+                                            href="/dashboard"
+                                        >
+                                            Dashboard
+                                        </a>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                         <div className="navbar-brand">
-                            <a
-                                className="navbar-item"
-                                href="https://www.github.com/siddxharth"
-                            >
+                            <a className="navbar-item" href="/user">
                                 <div
                                     style={{
                                         width: "42px",
@@ -202,10 +165,8 @@ export default function Navbar({ isSignedIn }) {
                     <div className="navbar-end">
                         <div className="navbar-item">
                             <div className="buttons">
-                                <a className="button is-primary">
-                                    <strong>Sign up</strong>
-                                </a>
                                 <a className="button is-light">Log in</a>
+                                <a className="button is-primary">Sign up</a>
                             </div>
                         </div>
                     </div>

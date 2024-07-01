@@ -1,2 +1,16 @@
 /* Import Bulma CSS */
 @import "https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css";
+
+/* Add this CSS to your stylesheet */
+/* CustomContainer.css */
+.custom-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+  
+@media screen and (max-width: 768px) {
+    .custom-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
