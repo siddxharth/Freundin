@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../AuthContext";
+import { Navigate } from "react-router-dom";
 
 const getInitials = (name) => {
     const initials = name
@@ -62,12 +63,29 @@ export default function User() {
                 >
                     <p>Welcome, {user?.name}!</p>
                     <p>User ID: {user?._id}</p>
-                    <button
-                        className="button is-primary"
-                        onClick={() => logoutUser()}
-                    >
-                        Logout User
-                    </button>
+                    <div className="container">
+                        <a
+                            className="button is-primary"
+                            style={{ marginRight: "10px" }}
+                            href="/newquiz"
+                        >
+                            Create New Quiz
+                        </a>
+                        <a
+                            className="button is-primary is-light"
+                            style={{ marginRight: "10px" }}
+                            href="/quizzes"
+                        >
+                            View Quizzes
+                        </a>
+                        <a
+                            className="button is-danger is-light"
+                            style={{ marginRight: "10px" }}
+                            onClick={() => logoutUser()}
+                        >
+                            Logout User
+                        </a>
+                    </div>
                 </div>
             </section>
             <div style={{ marginTop: "20px", textAlign: "center" }}>

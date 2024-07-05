@@ -107,18 +107,36 @@ export default function Navbar() {
                     <div className="navbar-item">
                         {user?._id ? (
                             <div className="buttons">
-                                <a className="button is-light" href="/user">
-                                    {getInitials(user.name)}
-                                </a>
-                                <a
-                                    className="button is-primary"
-                                    onClick={() => {
-                                        logoutUser();
-                                        window.location.href = "/login";
+                                {/* <a className="button is-light" href="/user"> */}
+                                {/* Print user initials with random background in round profile picture style */}
+                                <div
+                                    style={{
+                                        backgroundColor: getPersistentColor(
+                                            user.name
+                                        ),
+                                        color: isColorLight(
+                                            getPersistentColor(user.name)
+                                        )
+                                            ? "black"
+                                            : "white",
+                                        width: "40px",
+                                        height: "40px",
+                                        borderRadius: "50%",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        marginRight: "10px",
                                     }}
                                 >
-                                    Logout
-                                </a>
+                                    {getInitials(user.name)}
+                                </div>
+                                {/* </a> */}
+                                <button
+                                    className="button is-primary"
+                                    onClick={() => logoutUser()}
+                                >
+                                    Logout User
+                                </button>
                             </div>
                         ) : (
                             <div className="buttons">

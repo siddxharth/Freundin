@@ -5,6 +5,10 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import AuthProvider from "./AuthContext";
 import User from "./pages/User";
+import Dashboard from "./pages/Dashboard";
+import NewQuiz from "./pages/NewQuiz";
+import Quizzes from "./pages/Quizzes";
+
 import PrivateRoute from "./components/PrivateRoute";
 
 export default function App() {
@@ -19,7 +23,16 @@ export default function App() {
                         path="/user"
                         element={<PrivateRoute element={User} />}
                     />
+                    <Route
+                        path="/dashboard"
+                        element={<PrivateRoute element={Dashboard} />}
+                    />
+                    <Route path="/newquiz" element={<NewQuiz />} />
                     <Route path="/" element={<Home />} />
+                    <Route
+                        path="/quizzes"
+                        element={<PrivateRoute element={Quizzes} />}
+                    />
                     <Route element={<>Not Found</>} />
                 </Routes>
             </Router>

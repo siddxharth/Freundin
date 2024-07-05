@@ -99,7 +99,7 @@ const Login = () => {
                         <div className="field">
                             <p>
                                 {`Don't have an account? `}
-                                <a href="/signup">
+                                <a href="/register">
                                     <strong>Sign Up</strong>
                                 </a>
                             </p>
