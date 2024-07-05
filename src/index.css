@@ -14,3 +14,21 @@
         padding-right: 1rem;
     }
 }
+
+.custom-link a {
+    color: #FFD700; /* Gold color for contrast, adjust as needed */
+}
+
+.timer-container {
+    margin-top: 10px;
+    height: 5px;
+    background-color: rgb(240, 240, 240); /* Lighter shade for the background */
+    /* border-radius: 5px; */
+    overflow: hidden; /* Ensures the inner div's rounded corners are visible */
+}
+
+.timer-progress {
+    transition: width 0.5s ease-out; /* Smooth transition for width change */
+    height: 5px;
+    background-color: rgb(255, 71, 111); /* A more soothing green */
+}

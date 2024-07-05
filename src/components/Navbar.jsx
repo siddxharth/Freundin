@@ -1,9 +1,5 @@
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-
-Navbar.propTypes = {
-    isSignedIn: PropTypes.bool.isRequired,
-};
+import { useState, useContext, useEffect } from "react";
+import { AuthContext } from "../AuthContext";
 
 const getInitials = (name) => {
     const initials = name
@@ -49,15 +45,12 @@ const getRandomColor = () => {
     return color;
 };
 
-export default function Navbar({ isSignedIn }) {
+export default function Navbar() {
     const [isActive, setIsActive] = useState(false);
-    const [username, setUsername] = useState("");
-
+    const { user, logoutUser } = useContext(AuthContext);
     useEffect(() => {
-        // fetch username from API
-        setUsername("Hemu Khatri");
-    }, []);
-
+        console.log("Current user from navbar:", user);
+    });
     const toggleNavbar = () => {
         setIsActive(!isActive);
     };
@@ -110,67 +103,38 @@ export default function Navbar({ isSignedIn }) {
                 id="navbarBasicExample"
                 className={`navbar-menu ${isActive ? "is-active" : ""}`}
             >
-                {isSignedIn ? (
-                    <div className="navbar-end">
-                        {isSignedIn && (
-                            <>
-                                <div className="navbar-brand">
-                                    <div className="navbar-item">
-                                        <a
-                                            className="button is-primary"
-                                            href="/new-quiz"
-                                        >
-                                            Create new quiz
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className="navbar-brand">
-                                    <div className="navbar-item">
-                                        <a
-                                            className="button is-link is-light"
-                                            href="/dashboard"
-                                        >
-                                            Dashboard
-                                        </a>
-                                    </div>
-                                </div>
-                            </>
-                        )}
-                        <div className="navbar-brand">
-                            <a className="navbar-item" href="/user">
-                                <div
-                                    style={{
-                                        width: "42px",
-                                        height: "42px",
-                                        borderRadius: "21px", // Half of width/height to make it round
-                                        backgroundColor:
-                                            getPersistentColor(username),
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        color: isColorLight(
-                                            getPersistentColor(username)
-                                        )
-                                            ? "#000"
-                                            : "#fff",
-                                        fontSize: "21px",
+                <div className="navbar-end">
+                    <div className="navbar-item">
+                        {user?._id ? (
+                            <div className="buttons">
+                                <a className="button is-light" href="/user">
+                                    {getInitials(user.name)}
+                                </a>
+                                <a
+                                    className="button is-primary"
+                                    onClick={() => {
+                                        logoutUser();
+                                        window.location.href = "/login";
                                     }}
                                 >
-                                    {getInitials(username)}
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="navbar-end">
-                        <div className="navbar-item">
-                            <div className="buttons">
-                                <a className="button is-light">Log in</a>
-                                <a className="button is-primary">Sign up</a>
+                                    Logout
+                                </a>
                             </div>
-                        </div>
+                        ) : (
+                            <div className="buttons">
+                                <a className="button is-light" href="/login">
+                                    Log in
+                                </a>
+                                <a
+                                    className="button is-primary"
+                                    href="/register"
+                                >
+                                    Sign up
+                                </a>
+                            </div>
+                        )}
                     </div>
-                )}
+                </div>
             </div>
         </nav>
     );

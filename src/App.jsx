@@ -1,52 +1,28 @@
-import {
-    BrowserRouter,
-    Routes,
-    Route,
-    Navigate,
-    useLocation,
-} from "react-router-dom";
-import Navbar from "./components/Navbar";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
-import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Navbar from "./components/Navbar";
+import AuthProvider from "./AuthContext";
+import User from "./pages/User";
+import PrivateRoute from "./components/PrivateRoute";
 
-function App() {
+export default function App() {
     return (
-        <BrowserRouter>
-            <RoutesWithNavbar />
-        </BrowserRouter>
+        <AuthProvider>
+            <Router>
+                <Navbar />
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route
+                        path="/user"
+                        element={<PrivateRoute element={User} />}
+                    />
+                    <Route path="/" element={<Home />} />
+                    <Route element={<>Not Found</>} />
+                </Routes>
+            </Router>
+        </AuthProvider>
     );
 }
-
-function RoutesWithNavbar() {
-    const location = useLocation();
-    const isSignedIn = true; // Assuming you have a way to determine if a user is signed in
-
-    return (
-        <>
-            {location.pathname !== "/not-found" && (
-                <Navbar isSignedIn={isSignedIn} />
-            )}
-            <Routes>
-                <Route path="/" element={<Home isSignedIn={isSignedIn} />} />
-                <Route
-                    path="/dashboard"
-                    element={isSignedIn ? <Dashboard /> : <Navigate to="/" />}
-                />
-                <Route
-                    path="/user"
-                    element={isSignedIn ? <Dashboard /> : <Navigate to="/" />} //Change to User component
-                />
-                <Route
-                    path="/new-quiz"
-                    element={isSignedIn ? <Dashboard /> : <Navigate to="/" />} //Change to NewQuiz component
-                />
-                {/* Redirect to not-found for any unknown routes */}
-                <Route path="/not-found" element={<NotFound />} />
-                <Route path="*" element={<Navigate to="/not-found" />} />
-            </Routes>
-        </>
-    );
-}
-
-export default App;
