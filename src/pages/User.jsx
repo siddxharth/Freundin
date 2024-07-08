@@ -50,12 +50,8 @@ const getRandomColor = () => {
 export default function User() {
     const { user, logoutUser } = useContext(AuthContext); //Use auth context
 
-    useEffect(() => {
-        console.log("Current user:", user);
-    }, [user]);
-
     return (
-        <>
+        <div>
             <section className="section">
                 <div
                     className="container"
@@ -94,6 +90,6 @@ export default function User() {
                     in future releases.
                 </p>
             </div>
-        </>
+        </div>
     );
 }

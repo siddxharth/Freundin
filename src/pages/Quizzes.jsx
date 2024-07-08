@@ -1,5 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { AuthContext } from "../AuthContext";
+import { Link } from "react-router-dom";
 
 import api from "../utils/api";
 
@@ -7,15 +8,14 @@ export default function Quizzes() {
     const [quizzes, setQuizzes] = useState([]);
     const { user } = useContext(AuthContext);
 
-    const fetchQuizzes = async () => {
+    const fetchQuizzes = useCallback(async () => {
         const response = await api.post("/quizzes", { creator: user._id });
         setQuizzes(response.data);
-        console.log(response.data);
-    };
+    }, [user._id]);
 
     useEffect(() => {
         fetchQuizzes();
-    }, []);
+    }, [fetchQuizzes]);
 
     return (
         <section className="section">
@@ -30,13 +30,16 @@ export default function Quizzes() {
                     quizzes.map((quiz) => (
                         <div key={quiz._id} className="card quiz-card">
                             <div className="card-content">
-                                <div className="quiz-header">
+                                <div
+                                    className="quiz-header"
+                                    style={{ marginBottom: "10px" }}
+                                >
                                     <p className="title is-4 quiz-title">
                                         {quiz.title}
                                     </p>
-                                    {/* <p className="subtitle is-6 quiz-description">
+                                    <p className="subtitle is-6 quiz-description">
                                         {quiz.description}
-                                    </p> */}
+                                    </p>
                                 </div>
                                 <div className="buttons are-right">
                                     <div className="dropdown is-hoverable">
@@ -64,7 +67,6 @@ export default function Quizzes() {
                                                 {quiz.questions.map(
                                                     (question) => (
                                                         <a
-                                                            href="#"
                                                             key={question._id}
                                                             className="dropdown-item"
                                                         >
@@ -83,12 +85,6 @@ export default function Quizzes() {
                                                 aria-controls="dropdown-menu2"
                                             >
                                                 <span>Show Friends</span>
-                                                <span className="icon is-small">
-                                                    <i
-                                                        className="fas fa-angle-down"
-                                                        aria-hidden="true"
-                                                    ></i>
-                                                </span>
                                             </button>
                                         </div>
                                         <div
@@ -98,23 +94,33 @@ export default function Quizzes() {
                                         >
                                             <div className="dropdown-content dropdown-content-scrollable">
                                                 {quiz.friends.map((friend) => (
-                                                    <a
-                                                        href="#"
+                                                    <Link
                                                         key={friend._id}
                                                         className="dropdown-item"
                                                     >
                                                         {friend.name}
-                                                    </a>
+                                                    </Link>
                                                 ))}
                                             </div>
                                         </div>
                                     </div>
+                                    <Link
+                                        className="button is-primary is-light"
+                                        to={`/quiz/${quiz._id}`}
+                                        // onClick={() => {
+                                        //     console.log(quiz._id);
+                                        // }}
+                                        preventScrollReset={true}
+                                        state={{ id: user._id }}
+                                    >
+                                        View Quiz
+                                    </Link>
                                 </div>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <div className="has-text-centered">...Loading Data</div>
+                    <div className="has-text-centered">No quizzes found.</div>
                 )}
             </div>
         </section>

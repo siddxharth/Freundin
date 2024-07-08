@@ -1,12 +1,16 @@
 import { useContext, useState } from "react";
 import api from "../utils/api";
 import { AuthContext } from "../AuthContext";
+import { Navigate } from "react-router-dom";
 
 export default function NewQuiz() {
     const [questionCount, setQuestionCount] = useState(5);
     const [friends, setFriends] = useState([""]);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [quiz, setQuiz] = useState(null);
+    const [toQuiz, setToQuiz] = useState(false);
+
     const { user } = useContext(AuthContext);
     const handleQuestionCountChange = (event) => {
         setQuestionCount(event.target.value);
@@ -39,11 +43,17 @@ export default function NewQuiz() {
                 creator: user._id,
             });
             console.log("Quiz created:", response.data);
-            window.location.href = "/quizzes";
+            setQuiz(response.data.quiz._id);
+            console.log(response.data.quiz._id);
+            setToQuiz(true);
         } catch (error) {
             console.error("There was an error!", error);
         }
     };
+
+    if (toQuiz === true) {
+        return <Navigate to={`/quiz/${quiz}`} />;
+    }
 
     return (
         <div

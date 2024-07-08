@@ -8,6 +8,7 @@ import User from "./pages/User";
 import Dashboard from "./pages/Dashboard";
 import NewQuiz from "./pages/NewQuiz";
 import Quizzes from "./pages/Quizzes";
+import Quiz from "./pages/Quiz";
 
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -32,6 +33,10 @@ export default function App() {
                     <Route
                         path="/quizzes"
                         element={<PrivateRoute element={Quizzes} />}
+                    />
+                    <Route
+                        path="/quiz/:id"
+                        element={<PrivateRoute element={Quiz} />}
                     />
                     <Route element={<>Not Found</>} />
                 </Routes>

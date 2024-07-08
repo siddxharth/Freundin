@@ -12,7 +12,9 @@ const AuthProvider = ({ children }) => {
         if (token) {
             try {
                 // const decodedToken = jwtDecode(token);
-                // setUser({ id: decodedToken.id });
+                // console.log(decodedToken);
+                // setUser({ id: decodedToken._id, name: decodedToken.name });
+                // For future: update jwt token for server auth
             } catch (error) {
                 console.error("error:", error);
                 setUser(null);

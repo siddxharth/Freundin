@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from "../AuthContext";
 
 const getInitials = (name) => {
@@ -48,9 +48,6 @@ const getRandomColor = () => {
 export default function Navbar() {
     const [isActive, setIsActive] = useState(false);
     const { user, logoutUser } = useContext(AuthContext);
-    useEffect(() => {
-        console.log("Current user from navbar:", user);
-    });
     const toggleNavbar = () => {
         setIsActive(!isActive);
     };
